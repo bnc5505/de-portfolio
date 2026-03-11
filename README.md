@@ -45,31 +45,15 @@ Containerised Python pipeline that pulls live stock prices into Postgres using d
 
 ```
 de-portfolio/
-├── ingestion/        data ingestion scripts
-├── transformation/   SQL queries and dbt models
-├── orchestration/    Airflow DAGs and Prefect flows
-├── infrastructure/   Terraform, Docker, Kubernetes configs
-├── streaming/        Kafka and Flink jobs
-├── capstones/        end-to-end industry projects
-└── docs/             notes and progress tracking
+|─ ingestion/        data ingestion scripts
+|─ transformation/   SQL queries and dbt models
+|─ orchestration/    Airflow DAGs and Prefect flows
+|─ infrastructure/   Terraform, Docker, Kubernetes configs
+|─ streaming/        Kafka and Flink jobs
+|─ capstones/        end-to-end industry projects
+|─ docs/             notes and progress tracking
 ```
 
 ---
-
-## Running Locally
-
-Requirements: Docker Desktop, Python 3.11+
-
-```bash
-git clone https://github.com/bnc5505/de-portfolio.git
-cd de-portfolio
-
-docker run --name de-postgres \
-  -e POSTGRES_PASSWORD=depassword \
-  -e POSTGRES_DB=finance \
-  -p 5432:5432 -d postgres:15
-
-pip install yfinance psycopg2-binary pandas
-python ingestion/load_stock_data.py
 
 
