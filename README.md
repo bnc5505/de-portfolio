@@ -1,17 +1,75 @@
 # Data Engineering Portfolio
 
-End-to-end data engineering projects across Fintech, Health-tech, and Retail.
+I a Data enthusiast and want to build projects as I learn new concepts and technologies.
 
-## Stack
-Python · SQL · Docker · Airflow · dbt · Spark · Kafka · Kubernetes · GCP · Terraform
+
+**Phase 1 — Foundation**
+Git, SQL, Docker
+
+**Phase 2 — Orchestration**
+Airflow, dbt, Prefect
+
+**Phase 3 — Cloud and Warehouses**
+GCP, BigQuery, Terraform, Snowflake
+
+**Phase 4 — Batch Processing**
+PySpark, Dataproc
+
+**Phase 5 — Streaming**
+Kafka, Spark Streaming
+
+**Phase 6 — Kubernetes**
+K8s, GKE, Helm
+
+**Phase 7 — Capstones**
+One full project each for Fintech, Health-tech, and Retail
+
+---
 
 ## Projects
-|Phase|  Technology         | Project |
-|
-| 1   | Git + SQL + Docker | Finance data ingester |
-| 2   | Airflow + dbt | Market data pipeline & financial mart |
-| 3   | GCP + Terraform | Cloud data lake |
-| 4   | PySpark | Historical risk analytics |
-| 5   | Kafka + Spark Streaming | Real-time fraud detection |
-| 6   | Kubernetes | Production deployment |
-| 7   | Capstones | Fintech · Health-tech · Retail |
+
+### Phase 1 — Foundation (in progress)
+
+**Portfolio Repo Setup**
+Set up a structured GitHub repo with proper branching workflow and folder layout for all future phases.
+
+**Stock Market SQL Analytics**
+Pulled 2 years of real OHLCV data for 5 tickers across Fintech, Health-tech, and Retail. Built analytics queries using window functions, CTEs, indexes, and query plan analysis in PostgreSQL running on Docker.
+
+**Finance API Ingester** — coming next
+Containerised Python pipeline that pulls live stock prices into Postgres using docker-compose.
+
+---
+
+## Repo Structure
+
+```
+de-portfolio/
+├── ingestion/        data ingestion scripts
+├── transformation/   SQL queries and dbt models
+├── orchestration/    Airflow DAGs and Prefect flows
+├── infrastructure/   Terraform, Docker, Kubernetes configs
+├── streaming/        Kafka and Flink jobs
+├── capstones/        end-to-end industry projects
+└── docs/             notes and progress tracking
+```
+
+---
+
+## Running Locally
+
+Requirements: Docker Desktop, Python 3.11+
+
+```bash
+git clone https://github.com/bnc5505/de-portfolio.git
+cd de-portfolio
+
+docker run --name de-postgres \
+  -e POSTGRES_PASSWORD=depassword \
+  -e POSTGRES_DB=finance \
+  -p 5432:5432 -d postgres:15
+
+pip install yfinance psycopg2-binary pandas
+python ingestion/load_stock_data.py
+
+
