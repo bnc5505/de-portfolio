@@ -1,5 +1,23 @@
 version: "3.8"
 
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.8.1
+  env_file: .env
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${AIRFLOW_DB}
+    AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY}
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW_SECRET_KEY}
+    _PIP_ADDITIONAL_REQUIREMENTS: "yfinance==0.2.18 multitasking==0.0.9 psycopg2-binary"
+  volumes:
+    - ./orchestration/airflow/dags:/opt/airflow/dags
+    - ./orchestration/airflow/logs:/opt/airflow/logs
+    - ./orchestration/airflow/plugins:/opt/airflow/plugins
+  depends_on:
+    postgres:
+      condition: service_healthy
+
 services:
 
   postgres:
@@ -19,6 +37,26 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  airflow-init:
+    <<: *airflow-common
+    container_name: airflow-init
+    command: bash -c "airflow db migrate && airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com"
+    restart: "no"
+
+  airflow-webserver:
+    <<: *airflow-common
+    container_name: airflow-webserver
+    command: webserver
+    ports:
+      - "8080:8080"
+    restart: always
+
+  airflow-scheduler:
+    <<: *airflow-common
+    container_name: airflow-scheduler
+    command: scheduler
+    restart: always
 
   ingester:
     build:
