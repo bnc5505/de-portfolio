@@ -221,3 +221,4 @@ venv/
 __pycache__/
 .DS_Store
 *.pyc
+orchestration/airflow/logs/
