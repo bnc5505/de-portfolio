@@ -1,0 +1,31 @@
+version: 2
+
+sources:
+  - name: finance
+    database: finance
+    schema: public
+    tables:
+      - name: prices
+        description: Raw daily OHLCV data from Yahoo Finance
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
+          - name: ticker
+            tests:
+              - not_null
+          - name: date
+            tests:
+              - not_null
+          - name: close
+            tests:
+              - not_null
+
+      - name: sectors
+        description: Ticker to sector mapping
+        columns:
+          - name: ticker
+            tests:
+              - unique
+              - not_null

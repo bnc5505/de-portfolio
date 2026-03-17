@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: mart_sector_performance
+    description: Final sector performance table with returns, volatility and ranking per sector
+    columns:
+      - name: ticker
+        tests:
+          - not_null
+          - unique
+      - name: total_return_pct
+        tests:
+          - not_null
+      - name: rank_in_sector
+        tests:
+          - not_null
+
+  - name: mart_price_signals
+    description: Daily price signals with moving averages and move categorization
+    columns:
+      - name: ticker
+        tests:
+          - not_null
+      - name: date
+        tests:
+          - not_null
+      - name: price_vs_ma30
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['above_30d_avg', 'below_30d_avg', 'at_30d_avg']
+      - name: move_category
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['large_move', 'moderate_move', 'normal']
