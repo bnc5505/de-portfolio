@@ -1,0 +1,10 @@
+version: 2
+models:
+  - name: int_monthly_performance
+    columns:
+      - name: ticker
+        tests:
+          - not_null
+      - name: month
+        tests:
+          - not_null
